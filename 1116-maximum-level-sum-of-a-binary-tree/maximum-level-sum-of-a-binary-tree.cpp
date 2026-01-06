@@ -11,28 +11,28 @@
  */
 class Solution {
 public:
+    vector<int>allLevelSum;
+    void dfs(TreeNode* root, int level){
+        if(root == NULL) return;
+
+        if(level >= allLevelSum.size()){
+            allLevelSum.resize(level+1,0);
+        }
+
+        allLevelSum[level] += root->val;
+        dfs(root->left, level+1);
+        dfs(root->right, level+1);
+    }
     int maxLevelSum(TreeNode* root) {
+        dfs(root,1);
         int answerLevel = INT_MAX;
         int maximumSum = INT_MIN;
-        queue<TreeNode*>queue;
-        queue.push(root);
-        int level = 1;
-        while(!queue.empty()){
-            int sz = queue.size();
-            int thisLevelSum = 0;
-            while(sz--){
-                TreeNode* currentNode = queue.front();
-                queue.pop();
-                thisLevelSum += currentNode->val;
-
-                if(currentNode->left != NULL) queue.push(currentNode->left);
-                if(currentNode->right != NULL) queue.push(currentNode->right);
+        int sz = allLevelSum.size();
+        for(int i = 1; i < sz; i++){
+            if(allLevelSum[i] > maximumSum){
+                maximumSum = allLevelSum[i];
+                answerLevel = i;
             }
-            if(thisLevelSum > maximumSum){
-                maximumSum = thisLevelSum;
-                answerLevel = level;
-            }
-            level++;
         }
         return answerLevel;
     }
