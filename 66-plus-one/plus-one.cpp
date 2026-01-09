@@ -12,11 +12,12 @@ public:
                 int val = digits[i] + rem;
                 digits[i] = val%10;
                 rem = val/10;
+                if(rem == 0) break;
                 i--;
             }
         }
         if(rem != 0){
-            reverse(digits.begin(),digits.end());
+            //reverse(digits.begin(),digits.end());
             digits.push_back(rem);
             reverse(digits.begin(),digits.end());
         } 
