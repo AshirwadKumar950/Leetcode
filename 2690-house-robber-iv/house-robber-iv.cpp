@@ -18,7 +18,7 @@ public:
         return k <= 0;
     }
     int minCapability(vector<int>& nums, int k) {
-        int lb = *min_element(nums.begin(),nums.end()), ub = *max_element(nums.begin(),nums.end());
+        int lb = 1, ub = 1e9+1;
         int ans = 0;
         while(lb <= ub){
             int mid = lb + (ub-lb)/2;
