@@ -15,7 +15,6 @@ public:
     int ways = 0;
     void rec(TreeNode* root, ll t){
         if(!root) return;
-        if(root->val > 1e8-1) return;
         if(root->val == t) ways++;
 
         rec(root->left,t-root->val);
