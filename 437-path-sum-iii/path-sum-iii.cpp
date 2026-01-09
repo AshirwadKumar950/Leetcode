@@ -12,23 +12,24 @@
 class Solution {
 public:
     typedef long long ll;
+    unordered_map<ll,int>mp;
     int ways = 0;
-    void rec(TreeNode* root, ll t){
-        if(!root) return;
-        if(root->val == t) ways++;
-
-        rec(root->left,t-root->val);
-        rec(root->right,t-root->val);
-    }
-    void dfs(TreeNode* root, ll t){
+    void rec(TreeNode* root, ll t, ll curr){
         if(!root) return;
 
-        rec(root,t);
-        dfs(root->left,t);
-        dfs(root->right,t);
+        curr += root->val;
+        ll req = curr-t;
+        if(mp.find(req) != mp.end()){
+            ways += mp[req];
+        }
+        mp[curr]++;
+        rec(root->left,t,curr);
+        rec(root->right,t,curr);
+        mp[curr]--;
     }
     int pathSum(TreeNode* root, int targetSum) {
-        dfs(root,1ll*targetSum);
+        mp[0] = 1;
+        rec(root,1ll*targetSum,1ll*0);
         return ways;
     }
 };
