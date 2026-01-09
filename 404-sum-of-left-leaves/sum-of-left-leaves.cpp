@@ -17,6 +17,7 @@ public:
 
         if(root->left == NULL && root->right == NULL && parent !=NULL &&parent->left == root){
             sum += root->val;
+            return;
         }
         rec(root->left,root);
         rec(root->right,root);
