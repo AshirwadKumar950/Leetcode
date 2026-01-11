@@ -29,22 +29,14 @@ public:
     int maximalRectangle(vector<vector<char>>& matrix) {
         int m = matrix.size();
         int n = matrix[0].size();
-        vector<vector<int>>mat(m,vector<int>(n));
-
+        int maxarea = 0;
+        vector<int>height(n,0);
         for(int i = 0; i < m; i++){
             for(int j = 0; j < n; j++){
-                mat[i][j] = matrix[i][j] - '0';
+                if(matrix[i][j] == '1') height[j]+=1;
+                else height[j] = 0;
             }
-        }
-        for(int i = 0; i < n; i++){
-            for(int j = 1; j < m; j++){
-                if(mat[j][i] == 0) continue;
-                mat[j][i] = mat[j][i] + mat[j-1][i];
-            }
-        }
-        int maxarea = 0;
-        for(int i = 0; i < m; i++){
-            maxarea = max(maxarea,largestRectangleArea(mat[i]));
+            maxarea = max(maxarea,largestRectangleArea(height));
         }
         return maxarea;
     }
