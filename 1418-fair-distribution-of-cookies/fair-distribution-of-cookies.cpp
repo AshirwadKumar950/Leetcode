@@ -11,11 +11,12 @@ public:
         }
 
         for(int j = 0; j < k; j++){
+            if(children[j] + cookies[i] > ans) continue;
             children[j] += cookies[i];
             rec(i+1);
             children[j] -= cookies[i];
+            if(children[j] == 0) break;
         }
-
     }
     int distributeCookies(vector<int>& cookies, int k) {
         this->cookies = cookies;
