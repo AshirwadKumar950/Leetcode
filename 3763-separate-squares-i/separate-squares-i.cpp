@@ -25,7 +25,8 @@ public:
             lb = min(lb,(double)square[1]);
             ub = max(ub,(double)square[1]+square[2]);
         }
-        while(ub - lb >= 1e-5){
+        // while(ub - lb >= 1e-5){
+            for(int i = 0; i < 60; i++){
             //mid is the mid line where i will check
             //area at top of this and area at bottom of this
             double mid = lb + (ub-lb)/2;
@@ -35,7 +36,8 @@ public:
             }else{
                 ub = mid;
             }
-        }
+        //}
+            }
         return lb;
     }
 };
