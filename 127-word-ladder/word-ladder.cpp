@@ -9,27 +9,28 @@ public:
         */
         queue<string>q;
         q.push(beginWord);
-        unordered_set<string>used;
+        unordered_set<string>words(wordList.begin(),wordList.end());
         int size = 1;
         int ans = INT_MAX;
         while(!q.empty()){
             int sz = q.size();
-            
             while(sz--){
                 auto p = q.front();
                 q.pop();
                 if(p == endWord) return size;
-                for(auto &word : wordList){
-                    if(used.count(word)) continue;
-                    int l = p.length();
-                    int c = 0;
-                    for(int i = 0; i < l; i++){
-                        if(word[i] != p[i]) c++;
-                        if(c > 1) break;
-                    }
-                    if(c == 1) {
-                        q.push(word);
-                        used.insert(word);
+                
+                int l = p.length();
+                for(int i = 0; i < l; i++){
+                    for(int j = 0; j < 26; j++){
+                        string copy = p;
+                        char newchar = j + 'a';
+                        if(p[i] == newchar) continue;
+
+                        copy[i] = newchar;
+                        if(words.find(copy) != words.end()){
+                            q.push(copy);
+                            words.erase(copy);
+                        }
                     }
                 }
             }
