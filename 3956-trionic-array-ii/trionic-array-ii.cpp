@@ -63,7 +63,7 @@ public:
                 //cout<<start<<" "<<end<<endl;
                 ll decsum = 0;
                 if(start < end-1)
-                decsum = prefix[end-1] - prefix[start];
+                decsum = prefix[end-1 ] - prefix[start];
                 if(start > 0 && end < n-1){
                     pii leftV = dpL[start];
                     pii rightV = dpR[end];
