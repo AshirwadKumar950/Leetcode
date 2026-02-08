@@ -14,7 +14,7 @@ public:
         ll s1 = rec(i,j+1,c);
         ll s2 = rec(i+1,j,c);
         ll take = rec(i+1,j+1,c+1);
-        if(take != LLONG_MIN){
+        if(take != neg){
             take += 1ll*nums1[i]*nums2[j];
         }
         return ans = max({s1,s2,take});
