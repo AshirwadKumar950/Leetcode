@@ -2,7 +2,7 @@ class StockPrice {
 public:
     unordered_map<int,int>mp;
     set<pair<int,int>>st;
-    set<pair<int,int>>st2;
+    int latest = 0;
     StockPrice() {
         
     }
@@ -12,18 +12,17 @@ public:
             int old = mp[timestamp];
             st.erase({old,timestamp});
             st.insert({price,timestamp});
-            st2.erase({timestamp,old});
-            st2.insert({timestamp,price});
+            latest = max(latest,timestamp);
             mp[timestamp] = price;
             return;
         }
         st.insert({price,timestamp});
-        st2.insert({timestamp,price});
+        latest = max(latest,timestamp);
         mp[timestamp] = price;
     }
     
     int current() {
-        return prev(st2.end())->second;
+        return mp[latest];
     }
     
     int maximum() {
