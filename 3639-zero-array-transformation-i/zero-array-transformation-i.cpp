@@ -12,16 +12,14 @@ public:
         vector<int>diff(n,0);
         for(auto &q : queries){
             int l = q[0], r = q[1];
-            diff[l] -= 1;
-            if(r+1 < n) diff[r+1] += 1;
+            diff[l] += 1;
+            if(r+1 < n) diff[r+1] -= 1;
         }
         for(int i = 1; i < n; i++){
             diff[i] += diff[i-1];
         }
-        // [-1,0,0]
-        // [-1,]
         for(int i = 0; i < n; i++){
-            if(nums[i] > abs(diff[i])) return false;
+            if(nums[i] > diff[i]) return false;
         }
         return true;
     }
