@@ -3,24 +3,28 @@ public:
     string gcdOfStrings(string str1, string str2) {
         int l1 = str1.length(), l2 = str2.length();
 
-        int start = min(l1,l2);
-        while(start > 0){
-            string s = str1.substr(0,start);
-            string s1 = "";
-            string s2 = "";
-            while(s1.length() < l1){
-                s1 += s;
-            }
-            // cout<<"After operation s1"<<s1<<endl;
-            while(s2.length() < l2){
-                s2 += s;
-            }
-            // cout<<"After operation s2"<<s2<<endl;
-            if(s1 == str1 && s2 == str2){
-                return str1.substr(0,start);
-            }
-            start--;
+        if(str1 + str2 != str2 + str1) return "";
+        unordered_map<int,int>mp1,mp2;
+        for(auto &c : str1){
+            mp1[c]++;
         }
-        return "";
+        for(auto &c : str2){
+            mp2[c]++;
+        }
+        int g1 = 0, g2 = 0;
+        for(auto &[k,f] : mp1){
+            g1 = __gcd(g1,f);
+        }
+        for(auto &[k,f] : mp2){
+            g2 = __gcd(g2,f);
+        }
+
+        int l = (l1)/g1;
+        cout<<"GCD of first is "<<g1<<endl;
+        cout<<"GCD of second is "<<g2<<endl;
+        cout<<"Length of each block is "<<l<<endl;
+        int g3 = __gcd(g1,g2);
+        cout<<"GCD of both is "<<g3<<endl;
+        return str1.substr(0,l*g3);
     }
 };
