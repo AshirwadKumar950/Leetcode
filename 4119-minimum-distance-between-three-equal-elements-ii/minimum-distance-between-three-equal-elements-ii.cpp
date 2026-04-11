@@ -2,20 +2,18 @@ class Solution {
 public:
     int minimumDistance(vector<int>& nums) {
         int n = nums.size();
-        unordered_map<int,vector<int>>mp;
-        for(int i = 0; i < n; i++){
-            mp[nums[i]].push_back(i);
-        }
+        vector<deque<int>>arr(n+1);
         int ans = INT_MAX;
-        for(auto &[k,vec] : mp){
-            if(vec.size() < 3) continue;
-            int l = vec.size();
-            for(int i = 0; i <= l-3; i++){
-                int v1 = vec[i], v2 = vec[i+1], v3 = vec[i+2];
-                int value = abs(v1-v2)+abs(v2-v3)+abs(v1-v3);
-                ans = min(ans,value); 
+        for(int i = 0; i < n; i++){
+            arr[nums[i]].push_back(i);
+            if(arr[nums[i]].size() == 3){
+                int v1 = arr[nums[i]][0], v3 = arr[nums[i]][2];
+                int value = 2*(v3-v1);
+                ans = min(ans,value);
+                arr[nums[i]].pop_front();
             }
         }
+       
         return ans == INT_MAX ? -1 : ans;
     }
 };
