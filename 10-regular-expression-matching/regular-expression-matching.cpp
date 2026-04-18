@@ -1,30 +1,27 @@
 class Solution {
 public:
+    int dp[21][21];
+    bool rec(int i, int j, int l1, int l2, string& s, string& p){
+        if(j == l2) return i == l1;
+
+        if(i == l1){
+            for(int x = j; x < l2; x += 2)
+                if(x+1 >= l2 || p[x+1] != '*') return false;
+            
+            return true;
+        }
+
+        if(dp[i][j] != -1) return dp[i][j];
+        bool matched = false;
+        if(j+1 < l2 && p[j+1] == '*'){
+            matched = rec(i,j+2,l1,l2,s,p) || ((p[j] == '.' || s[i] == p[j]) && rec(i+1,j,l1,l2,s,p));
+        }else if(s[i] == p[j] || p[j] == '.'){
+            matched = rec(i+1,j+1,l1,l2,s,p);
+        }
+        return dp[i][j] = matched;
+    }
     bool isMatch(string s, string p) {
-        int l1 = s.length(), l2 = p.length();
-
-        vector<vector<int>>dp(l1+1,vector<int>(l2+1,0));
-        dp[l1][l2] = true;
-        // at l1 
-        for(int j = l2-1; j >= 0; j--){
-            if(j+1 < l2 && p[j+1] == '*'){
-                dp[l1][j] = dp[l1][j+2];
-            }
-        }
-         
-        for(int i = l1-1; i >= 0; i--){
-            for(int j = l2-1; j >= 0; j--){
-                bool match = false;
-
-                if(j+1 < l2 && p[j+1] == '*'){
-                    match = dp[i][j+2] || ((s[i] == p[j] || p[j] == '.') && dp[i+1][j]);
-                }else if(s[i] == p[j] || p[j] == '.'){
-                    match = dp[i+1][j+1];
-                }
-                dp[i][j] =match;
-            }
-        }
-
-        return dp[0][0];
+        memset(dp,-1,sizeof(dp));
+        return rec(0,0,s.length(),p.length(),s,p);
     }
 };
