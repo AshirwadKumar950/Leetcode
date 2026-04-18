@@ -1,8 +1,9 @@
 class Solution {
 public:
+    typedef long long ll;
     int mirrorDistance(int n) {
-        long long t = n;
-        long long sum = 0;
+        ll t = n;
+        ll sum = 0;
         while(t > 0){
             sum = sum*10 + t%10;
             t/=10;
